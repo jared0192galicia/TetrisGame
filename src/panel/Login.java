@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import clases.MainWindow;
 import clases.MenuWindow;
 
 public class Login extends JPanel implements ActionListener {
@@ -26,12 +27,14 @@ public class Login extends JPanel implements ActionListener {
 	private JButton access;
 	private JTextField txtUser;
 	private JPasswordField txtPass;
+	private MainWindow window;
 	
 	// Constructor
-	public Login(int width, int heigth) {
+	public Login(int width, int heigth, MainWindow window) {
 		initComponents();
 		this.setSize(width, heigth);
 		this.setLayout(new GridLayout());
+		this.window = window;
 	}
 	
 	// Instance and puts components decorate
@@ -46,7 +49,7 @@ public class Login extends JPanel implements ActionListener {
 		image.setBounds(image.getX(), image.getY(), 400, 500);
 //		image.setPreferredSize(getMaximumSize());
 		// Resize image 
-		ImageIcon imagen = new ImageIcon("./src/images/wallpaperPrincipal.jpg");
+		ImageIcon imagen = new ImageIcon("./src/images/imageLogin.png");
         ImageIcon icono = new ImageIcon(imagen.getImage().getScaledInstance(image.getWidth(),
                 image.getHeight(), Image.SCALE_DEFAULT));
         image.setIcon(icono);
@@ -96,15 +99,16 @@ public class Login extends JPanel implements ActionListener {
 		if (e.getSource() == access) {
 			
 			// valid textField the user
-			String name = txtUser.getName().trim();
+			String name = txtUser.getText().trim();
 			// Continue 
 			if (!name.equals("")) {
+				MainWindow.name = name;
 				txtUser.setBackground(Color.BLUE);
-				this.setVisible(false);				
+				window.setVisible(false);
 				new MenuWindow();
 			} else {
-				JOptionPane.showMessageDialog(null, "Debe ingresar su nombre");
 				txtUser.setBackground(Color.RED);
+				JOptionPane.showMessageDialog(null, "Debe ingresar su nombre");
 			}
 		}
 	}

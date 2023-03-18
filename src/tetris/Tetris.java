@@ -1,8 +1,8 @@
-package tetriz;
+package tetris;
 
 import clases.MainWindow;
 
-public class Tetriz {
+public class Tetris {
 	public static void main(String[] args) {
 		// Create main window
 		MainWindow window = new MainWindow();
