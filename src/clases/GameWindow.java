@@ -6,13 +6,16 @@ import panel.Game;
 
 public class GameWindow extends JFrame {
 	
-	Game game;
+	private Game game;
 	
 	public GameWindow() {
-		game = new Game(this);
-		this.setLocationRelativeTo(null);
+		this.setTitle("Nueva partida");
 		this.setSize(700, 500);
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+		game = new Game(this);
 		this.add(game);
 	}
 }

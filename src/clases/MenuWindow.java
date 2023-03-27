@@ -9,7 +9,7 @@ public class MenuWindow extends JFrame {
 	private MainMenu panel;
 	String name = MainWindow.name;
 	public MenuWindow() {
-		panel = new MainMenu(WIDTH, HEIGHT);
+		panel = new MainMenu(WIDTH, HEIGHT, this);
 		this.setSize(600, 700);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
