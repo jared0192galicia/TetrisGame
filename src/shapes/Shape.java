@@ -3,17 +3,37 @@ package shapes;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
-public class Shape {
-	private int WIDTH;
-	private int HEIGHT;
+public abstract class Shape {
 	
+	// size
+	protected int WIDTH;
+	protected int HEIGHT;
+	protected int size = 20;
+	
+	protected int x = 20;
+	protected int y = 20;
+
+	// Aspect
 	protected Color color;
 	protected Color baseColor;
-	protected int size;
+
+	// reason moving
+	protected final int xd = 20;
+	protected final int yd = 20;
 	
-	public void moveShape(Shape form, int xd, int yd) {
-		
+	// State
+	public boolean status = true;
+
+	public abstract void moveShape(Rectangle limits);
+	
+	public boolean getStatus() {
+		return status;
+	}
+	
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 }

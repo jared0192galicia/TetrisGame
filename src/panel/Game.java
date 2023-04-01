@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import clases.BoardGame;
 import clases.GameWindow;
 import shapes.Bar;
 import shapes.El;
@@ -20,13 +21,9 @@ import shapes.Zed;
 
 public class Game extends JPanel {
 
-	// Create arrays for the shapes
-	ArrayList<Zed> zeds = new ArrayList<Zed>();
-	ArrayList<Bar> bars = new ArrayList<Bar>();
-	ArrayList<El> els = new ArrayList<El>();
-	ArrayList<Square> squares = new ArrayList<Square>();
-	ArrayList<Ti> tis = new ArrayList<Ti>();
-
+	ArrayList<Shape> shape = new ArrayList<Shape>();
+	BoardGame board;
+	
 	// Objects auxi for array lists 
 	El el;
 	Ti ti;
@@ -44,27 +41,35 @@ public class Game extends JPanel {
 	int avanseX = 30;
 	int avanseY = 0;
 
+	/**
+	 * @category JPanel
+	 * @param window is parent of Game
+	 */
 	public Game(GameWindow window) {
-		setBackground(Color.blue);
-		width = window.getWidth();
-		heigth = window.getHeight();
+		this.width = window.getWidth();
+		this.heigth = window.getHeight();
 		setSize(width, heigth);
+		this.setBackground(new Color(30, 30, 30));
 		System.out.println("constructor");
-		
+		initComponents();
+	}	
+	
+	public void initComponents() {
+		// Init objects aux 
+		board = new BoardGame(this, 0, 0);
 		el = new El();
 		ti = new Ti();
 		zed = new Zed();
-		bar = new Bar();
+		bar = new Bar(20, 0);
 		square = new Square();
-	}
-	
-	public void initComponents() {
 	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		
+		super.paintComponent(g);
+		g.setColor(new Color(220, 220, 220, 150));
 
+		// Create grid in the panel
 		for (int i = 0; i < this.getWidth(); i+=20) {
 			g.drawLine(i, 0, i, this.getHeight());
 		}
@@ -72,11 +77,18 @@ public class Game extends JPanel {
 			g.drawLine(0, i, this.getWidth(), i);
 		}
 		
-		g.setColor(Color.WHITE);
-		square.drawSquare(g, 20, 20);
-		bar.drawBar(g, 100, 20, Color.gray, Color.CYAN);
-		el.drawEl(g, 140, 20, Color.CYAN, Color.GRAY);
-		ti.drawTi(g, 220, 20, Color.magenta, Color.CYAN);
+		// Draw bar generic
+		bar.drawBar(g, Color.GRAY, Color.CYAN);
+		update();
+	}
+	
+
+	public void update() {
+		bar.moveShape(getBounds());
+	}
+	
+	public void addShape() {
+		shape.add(bar);
 	}
 }
 

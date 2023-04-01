@@ -2,6 +2,7 @@ package shapes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class El extends Shape {
 	public void drawEl(Graphics g, int x, int y, Color color, Color colorBase) {
@@ -18,5 +19,11 @@ public class El extends Shape {
 		g.drawRect(x, y + size, size, size);
 		g.drawRect(x, y + (size * 2), size, size);
 		g.drawRect(x + size, y + (size * 2), size, size);
+	}
+
+	@Override
+	public void moveShape(Rectangle limits) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 public class Square extends Shape {
 	/**
@@ -32,6 +33,12 @@ public class Square extends Shape {
 		this.color = color;
 		
 		drawSquare(g, x, y);
+	}
+
+	@Override
+	public void moveShape(Rectangle limits) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

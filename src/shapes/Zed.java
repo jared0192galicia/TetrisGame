@@ -2,6 +2,7 @@ package shapes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Zed extends Shape{
 
@@ -22,4 +23,11 @@ public class Zed extends Shape{
 		g.drawRect(x + size, y + (size * 2), size, size);
 		g.drawRect(x + (size * 2), y + (size * 2), size, size);
 	}
+
+	@Override
+	public void moveShape(Rectangle limits) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
