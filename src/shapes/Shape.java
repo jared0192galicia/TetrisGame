@@ -40,7 +40,7 @@ public abstract class Shape {
 	public void move(Rectangle limits) {
 		if(getStatus()) {
 			
-			// Limits the moving for the Bar
+			// Limits the moving for the shape
 			if (y < limits.getMaxY() - HEIGHT) {
 				y += yd;
 //				System.out.println("limit: " + limits.getMaxX() + " y = " + y);

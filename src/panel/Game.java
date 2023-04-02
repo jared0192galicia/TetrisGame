@@ -95,6 +95,7 @@ public class Game extends JPanel {
 		for (Shape aux : shape) {
 			aux.draw(g, Color.GRAY, Color.CYAN);
 		}
+//		System.out.println(shape.get(shape.size() - 1).get);
 	}
 	
 

@@ -8,8 +8,8 @@ public class Zed extends Shape{
 
 	public Zed(int x, int y) {
 		super(x, y);
-		HEIGHT = size * 3;
 		WIDTH = size * 3;
+		HEIGHT = size * 2;
 	}
 
 	@Override
@@ -18,17 +18,17 @@ public class Zed extends Shape{
 		
 		g.fillRect(x, y, size, size);
 		g.fillRect(x + size, y, size, size);
-		g.fillRect(x + size, y + size, size, size);
-		g.fillRect(x + size, y + (size * 2), size, size);
-		g.fillRect(x + (size * 2), y + (size * 2), size, size);
+//		g.fillRect(x + size, y + size, size, size);
+		g.fillRect(x + size, y + (size * 1), size, size);
+		g.fillRect(x + (size * 2), y + (size * 1), size, size);
 		
 		g.setColor(colorBase);
 
 		g.drawRect(x, y, size, size);
 		g.drawRect(x + size, y, size, size);
-		g.drawRect(x + size, y + size, size, size);
-		g.drawRect(x + size, y + (size * 2), size, size);
-		g.drawRect(x + (size * 2), y + (size * 2), size, size);
+//		g.drawRect(x + size, y + size, size, size);
+		g.drawRect(x + size, y + (size * 1), size, size);
+		g.drawRect(x + (size * 2), y + (size * 1), size, size);
 	}
 
 	@Override
