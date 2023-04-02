@@ -6,7 +6,14 @@ import java.awt.Rectangle;
 
 public class Zed extends Shape{
 
-	public void drawZed(Graphics g, int x, int y, Color color, Color colorBase) {
+	public Zed(int x, int y) {
+		super(x, y);
+		HEIGHT = size * 3;
+		WIDTH = size * 3;
+	}
+
+	@Override
+	public void draw(Graphics g, Color color, Color colorBase) {
 		g.setColor(color);
 		
 		g.fillRect(x, y, size, size);

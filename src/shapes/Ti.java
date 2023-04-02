@@ -5,7 +5,14 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Ti extends Shape {
-	public void drawTi(Graphics g, int x, int y, Color color, Color colorBase) {
+	
+	public Ti(int x, int y) {
+		super(x, y);
+		HEIGHT = size * 2;
+		WIDTH = size * 3;
+	}
+	
+	public void draw(Graphics g, Color color, Color colorBase) {
 		g.setColor(color);
 
 		g.fillRect(x, y, size, size);

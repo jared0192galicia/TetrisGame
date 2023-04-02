@@ -56,12 +56,13 @@ public class Game extends JPanel {
 	
 	public void initComponents() {
 		// Init objects aux 
-		board = new BoardGame(this, 0, 0);
-		el = new El();
-		ti = new Ti();
-		zed = new Zed();
+		board = new BoardGame(this, 35, 25);
+//		el = new El(20, 0);
+//		ti = new Ti(20, 0);
+//		zed = new Zed(20, 0);
 		bar = new Bar(20, 0);
-		square = new Square();
+		square = new Square(20, 0);
+		shape.add(board.generateShape());
 	}
 	
 	@Override
@@ -77,14 +78,28 @@ public class Game extends JPanel {
 			g.drawLine(0, i, this.getWidth(), i);
 		}
 		
-		// Draw bar generic
-		bar.drawBar(g, Color.GRAY, Color.CYAN);
+		draw(g);
 		update();
+	}
+
+
+	public void draw(Graphics g) {// Draw bar generic
+		
+		// Draw new shape if is needed
+		if (!shape.get(shape.size() - 1).getStatus()) {
+			shape.add(board.generateShape());
+			shape.get(shape.size() - 1).draw(g, Color.GRAY, Color.CYAN);
+		}
+		
+		// Redraw the shapes in Shape
+		for (Shape aux : shape) {
+			aux.draw(g, Color.GRAY, Color.CYAN);
+		}
 	}
 	
 
 	public void update() {
-		bar.moveShape(getBounds());
+		shape.get(shape.size() - 1).move(getBounds());
 	}
 	
 	public void addShape() {

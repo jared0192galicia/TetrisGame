@@ -7,6 +7,13 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 public class Square extends Shape {
+	
+	public Square(int x, int y) {
+		super(x, y);
+		HEIGHT = size * 2;
+		WIDTH = size * 2;
+	}
+
 	/**
 	 * @param g Object for draw
 	 * @param x position in x
@@ -28,7 +35,8 @@ public class Square extends Shape {
 		
 	}
 	
-	public void drawSquare(Graphics g, int x, int y, Color color, Color colorBase) {
+	@Override
+	public void draw(Graphics g, Color color, Color colorBase) {
 		this.baseColor = colorBase;
 		this.color = color;
 		

@@ -5,7 +5,15 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class El extends Shape {
-	public void drawEl(Graphics g, int x, int y, Color color, Color colorBase) {
+	
+	public El(int x, int y) {
+		super(x, y);
+		HEIGHT = size * 3;
+		WIDTH = size * 2;
+	}
+	
+	@Override
+	public void draw(Graphics g, Color color, Color colorBase) {
 		g.setColor(color);
 		
 		g.fillRect(x, y, size, size);

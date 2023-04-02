@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import controls.KeyControls;
+
 public abstract class Shape {
 	
 	// size
@@ -24,9 +26,41 @@ public abstract class Shape {
 	protected final int yd = 20;
 	
 	// State
-	public boolean status = true;
+	private boolean status = true;
+	
+	
+	public Shape(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 
 	public abstract void moveShape(Rectangle limits);
+	
+	
+	public void move(Rectangle limits) {
+		if(getStatus()) {
+			
+			// Limits the moving for the Bar
+			if (y < limits.getMaxY() - HEIGHT) {
+				y += yd;
+//				System.out.println("limit: " + limits.getMaxX() + " y = " + y);
+			} else {
+				this.setStatus(false);
+			}
+			// if press letter the control move shape
+			if (KeyControls.s && (y < limits.getMaxY() - HEIGHT)) {
+				y += yd;
+			}
+			if (KeyControls.a && (x >= 20)) {
+				x -= xd;
+			}
+			if (KeyControls.d && (x < limits.getMaxX() - WIDTH)) {
+				x += xd;
+			}
+		}
+	}
+	
+	public abstract void draw(Graphics g, Color color, Color colorBase);
 	
 	public boolean getStatus() {
 		return status;

@@ -9,8 +9,7 @@ import controls.KeyControls;
 public class Bar extends Shape {
 
 	public Bar(int x, int y) {
-		this.x = x;
-		this.y = y;
+		super(x, y);
 		HEIGHT = size * 4;
 		WIDTH = size;
 	}
@@ -39,6 +38,7 @@ public class Bar extends Shape {
 		g.drawRect(x, y + (size * 3), size, size);
 	}
 
+	@Override
 	/**
 	 * 
 	 * @param g
@@ -47,7 +47,7 @@ public class Bar extends Shape {
 	 * @param color
 	 * @param colorBase
 	 */
-	public void drawBar(Graphics g, Color color, Color colorBase) {
+	public void draw(Graphics g, Color color, Color colorBase) {
 		g.setColor(color);
 		g.fillRect(x, y, size, size);
 		g.fillRect(x, y + size, size, size);
@@ -75,7 +75,6 @@ public class Bar extends Shape {
 			// Limits the moving for the Bar
 			if (y < limits.getMaxY() - HEIGHT) {
 				y += yd;
-//				System.out.println("limit: " + limits.getMaxX() + " y = " + y);
 			} else {
 				this.setStatus(false);
 			}
