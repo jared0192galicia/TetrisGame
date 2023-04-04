@@ -22,7 +22,7 @@ import shapes.Zed;
 public class Game extends JPanel {
 
 	ArrayList<Shape> shape = new ArrayList<Shape>();
-	BoardGame board;
+	public BoardGame board;
 	
 	// Objects auxi for array lists 
 	El el;
@@ -56,12 +56,7 @@ public class Game extends JPanel {
 	
 	public void initComponents() {
 		// Init objects aux 
-		board = new BoardGame(this, 35, 25);
-//		el = new El(20, 0);
-//		ti = new Ti(20, 0);
-//		zed = new Zed(20, 0);
-		bar = new Bar(20, 0);
-		square = new Square(20, 0);
+		board = new BoardGame(this, 25, 35);
 		shape.add(board.generateShape());
 	}
 	
@@ -103,9 +98,6 @@ public class Game extends JPanel {
 		shape.get(shape.size() - 1).move(getBounds());
 	}
 	
-	public void addShape() {
-		shape.add(bar);
-	}
 }
 
 

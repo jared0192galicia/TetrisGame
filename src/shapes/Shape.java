@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import clases.BoardGame;
 import controls.KeyControls;
 
 public abstract class Shape {
@@ -24,14 +25,16 @@ public abstract class Shape {
 	// reason moving
 	protected final int xd = 20;
 	protected final int yd = 20;
+	protected BoardGame board;
 	
 	// State
 	private boolean status = true;
+	protected int code;
 	
-	
-	public Shape(int x, int y) {
+	public Shape(int x, int y, BoardGame board) {
 		this.x = x;
 		this.y = y;
+		this.board = board;
 	}
 
 	public abstract void moveShape(Rectangle limits);
@@ -42,6 +45,7 @@ public abstract class Shape {
 			
 			// Limits the moving for the shape
 			if (y < limits.getMaxY() - HEIGHT) {
+				board.moveElement(code, x, y, 0);
 				y += yd;
 //				System.out.println("limit: " + limits.getMaxX() + " y = " + y);
 			} else {

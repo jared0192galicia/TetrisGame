@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import clases.BoardGame;
+
 public class Zed extends Shape{
 
-	public Zed(int x, int y) {
-		super(x, y);
+	public Zed(int x, int y, BoardGame board) {
+		super(x, y, board);
 		WIDTH = size * 3;
 		HEIGHT = size * 2;
+		code = 4;
 	}
 
 	@Override

@@ -15,7 +15,7 @@ public class ControlThread extends Thread {
 	public void run() {
 		while(iterate) {
 			try {
-				sleep(900);
+				sleep(500);
 				game.repaint();
 			} catch (Exception e) {
 				// TODO: handle exception

@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import clases.BoardGame;
+
 public class El extends Shape {
 	
-	public El(int x, int y) {
-		super(x, y);
+	public El(int x, int y, BoardGame board) {
+		super(x, y, board);
 		HEIGHT = size * 3;
 		WIDTH = size * 2;
+		code = 1;
 	}
 	
 	@Override

@@ -6,12 +6,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import clases.BoardGame;
+
 public class Square extends Shape {
 	
-	public Square(int x, int y) {
-		super(x, y);
+	public Square(int x, int y, BoardGame board) {
+		super(x, y, board);
 		HEIGHT = size * 2;
 		WIDTH = size * 2;
+		code = 2;
 	}
 
 	/**

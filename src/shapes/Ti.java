@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import clases.BoardGame;
+
 public class Ti extends Shape {
 	
-	public Ti(int x, int y) {
-		super(x, y);
+	public Ti(int x, int y, BoardGame board) {
+		super(x, y, board);
 		HEIGHT = size * 2;
 		WIDTH = size * 3;
+		code = 3;
 	}
 	
 	public void draw(Graphics g, Color color, Color colorBase) {

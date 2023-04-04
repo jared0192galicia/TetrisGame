@@ -4,14 +4,16 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import clases.BoardGame;
 import controls.KeyControls;
 
 public class Bar extends Shape {
 
-	public Bar(int x, int y) {
-		super(x, y);
+	public Bar(int x, int y, BoardGame board) {
+		super(x, y, board);
 		HEIGHT = size * 4;
 		WIDTH = size;
+		code = 0;
 	}
 
 	/**
