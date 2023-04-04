@@ -1,5 +1,7 @@
 package clases;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 import controls.ControlThread;
@@ -20,8 +22,24 @@ public class GameWindow extends JFrame {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.addKeyListener(new KeyControls(game));
+		this.addWindowListener(new WindowAdapter(){
+			  public void windowClosing(WindowEvent we){
+				  
+				  System.out.println("\n\n\n");
+				  thread.iterate = false;
+				  
+				  
+				  game.board.printBoard();
+				  
+				  System.exit(0);
+				  }
+				});
 		
 		thread = new ControlThread(game);
 		thread.start();
 	}
 }
+
+
+
+

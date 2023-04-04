@@ -48,6 +48,10 @@ public class KeyControls extends KeyAdapter {
 			right = true;
 			break;
 			
+		case KeyEvent.VK_ESCAPE:
+			ControlThread.iterate = !ControlThread.iterate;
+			break;
+			
 		default:
 //			throw new IllegalArgumentException("Unexpected value: " + eve);
 			System.err.println("No iniciado");

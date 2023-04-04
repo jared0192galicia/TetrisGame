@@ -15,8 +15,8 @@ public abstract class Shape {
 	protected int HEIGHT;
 	protected int size = 20;
 	
-	protected int x = 20;
-	protected int y = 20;
+	protected int x = 0;
+	protected int y = 0;
 
 	// Aspect
 	protected Color color;
@@ -44,15 +44,14 @@ public abstract class Shape {
 		if(getStatus()) {
 			
 			// Limits the moving for the shape
-			if (y < limits.getMaxY() - HEIGHT) {
-				board.moveElement(code, x, y, 0);
+			if (y < limits.getMaxY() - HEIGHT && !KeyControls.s && board.moveElement(code, x, y, 0)) {
 				y += yd;
 //				System.out.println("limit: " + limits.getMaxX() + " y = " + y);
 			} else {
 				this.setStatus(false);
 			}
 			// if press letter the control move shape
-			if (KeyControls.s && (y < limits.getMaxY() - HEIGHT)) {
+			if (KeyControls.s && (y < limits.getMaxY() - HEIGHT) && board.moveElement(code, x, y, 0)) {
 				y += yd;
 			}
 			if (KeyControls.a && (x >= 20)) {

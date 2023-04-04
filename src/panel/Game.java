@@ -83,7 +83,7 @@ public class Game extends JPanel {
 		// Draw new shape if is needed
 		if (!shape.get(shape.size() - 1).getStatus()) {
 			shape.add(board.generateShape());
-			shape.get(shape.size() - 1).draw(g, Color.GRAY, Color.CYAN);
+			//shape.get(shape.size() - 1).draw(g, Color.GRAY, Color.CYAN);
 		}
 		
 		// Redraw the shapes in Shape

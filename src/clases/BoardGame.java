@@ -21,8 +21,12 @@ public class BoardGame {
 	private Game game;
 	private int cells[][];
 
-
-	
+	/**
+	 * 
+	 * @param game  father
+	 * @param row
+	 * @param colum
+	 */
 	public BoardGame(Game game, int row, int colum) {
 		this.game = game;
 		cells = new int[row][colum];
@@ -34,18 +38,21 @@ public class BoardGame {
 		}
 		playSountrack();
 	}
-	
+
+	/**
+	 * Play music for the game
+	 */
 	public void playSountrack() {
 		Clip clip;
-	    String ruta = "/media/Soundtrack.wav";
-	    
-	    try {
-            clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(getClass().getResource(ruta)));
-            clip.loop(2);
-        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
-            JOptionPane.showMessageDialog(null, "Error en audio:\n" + ex.getMessage());
-        }
+		String ruta = "/media/Soundtrack.wav";
+
+		try {
+			clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(getClass().getResource(ruta)));
+			clip.loop(2);
+		} catch (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
+			JOptionPane.showMessageDialog(null, "Error en audio:\n" + ex.getMessage());
+		}
 	}
 
 	/**
@@ -102,108 +109,166 @@ public class BoardGame {
 	 */
 	public void addElemen(int code, int x, int y) {
 
-			int j = x / 20;
-			int i = y / 20;
-
-			System.out.println("i: " + i);
-			System.out.println("j: " + j);
-			cells[i][j] = 1;
-
-			switch (code) {
-			case 0:
-				cells[i + 1][j] = 1;
-				cells[i + 2][j] = 1;
-				cells[i + 3][j] = 1;
-				break;
-			case 1:
-				cells[i + 1][j] = 1;
-				cells[i + 2][j] = 1;
-				cells[i + 2][j + 1] = 1;
-				break;
-			case 2:
-				cells[i + 1][j] = 1;
-				cells[i][j + 1] = 1;
-				cells[i + 1][j + 1] = 1;
-				break;
-			case 3:
-				cells[i][j + 1] = 1;
-				cells[i][j + 2] = 1;
-				cells[i + 1][j + 1] = 1;
-				break;
-			case 4:
-				cells[i][j + 1] = 1;
-				cells[i + 1][j + 1] = 1;
-				cells[i + 1][j + 2] = 1;
-				break;
-			default:
-				throw new IllegalArgumentException("Unexpected value: " + code);
-			}
-
-			for (int i2 = 0; i2 < cells.length; i2++) {
-				for (int k = 0; k < cells[0].length; k++) {
-					System.out.print("[" + cells[i2][k] + "] ");
-				}
-				System.out.println();
-			}
-	}
-	
-	/**
-	 * 
-	 * @param code of the Shape {@value 0: Bar} {@value 1: EL} {@value 2: Square}
-	 *             {@value 3: Ti} {@value 4: Zed}
-	 * @param x current position in X
-	 * @param y current position current in y
-	 * @param direction of the moving
-	 * {@value 0: down} {@value 1: left} {@value 2: right}
-	 */
-	public void moveElement(int code, int x, int y, int direction) {
-		
 		int j = x / 20;
 		int i = y / 20;
-		
-		// Move shape selected
+
+		cells[i][j] = 1;
+		System.out.println("i: " + i);
+		System.out.println("j: " + j);
+		System.out.println("code: " + code);
+
 		switch (code) {
 		case 0:
+			cells[i + 1][j] = 1;
+			cells[i + 2][j] = 1;
+			cells[i + 3][j] = 1;
+			break;
+		case 1:
+			cells[i + 1][j] = 1;
+			cells[i + 2][j] = 1;
+			cells[i + 2][j + 1] = 1;
+			break;
+		case 2:
+			cells[i + 1][j] = 1;
+			cells[i][j + 1] = 1;
+			cells[i + 1][j + 1] = 1;
+			break;
+		case 3:
+			cells[i][j + 1] = 1;
+			cells[i][j + 2] = 1;
+			cells[i + 1][j + 1] = 1;
+			break;
+		case 4:
+			cells[i][j + 1] = 1;
+			cells[i + 1][j + 1] = 1;
+			cells[i + 1][j + 2] = 1;
+			break;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + code);
+		}
+//			 printBoard();
+
+	}
+
+	/**
+	 * 
+	 * @param code      of the Shape {@value 0: Bar} {@value 1: EL} {@value 2:
+	 *                  Square} {@value 3: Ti} {@value 4: Zed}
+	 * @param x         current position in X
+	 * @param y         current position current in y
+	 * @param direction of the moving {@value 0: down} {@value 1: left} {@value 2:
+	 *                  right}
+	 */
+	public boolean moveElement(int code, int x, int y, int direction) {
+
+		int j = x / 20;
+		int i = y / 20;
+		boolean value = true;
+
+		// Move shape selected
+		switch (code) {
+		// Bar
+		case 0:
 			if (direction == 0) {
-				if (cells[i + 4][j] == 0 ) {
+				if (cells[i + 4][j] == 0) {
 					cells[i][j] = 0;
 					cells[i + 1][j] = 1;
 					cells[i + 2][j] = 1;
 					cells[i + 3][j] = 1;
 					cells[i + 4][j] = 1;
+					value = true;
+				} else {
+					value = false;
 				}
 			}
 			break;
 		case 1:
-			
+			if (direction == 0) {
+				if ((cells[i + 3][j] == 0) && (cells[i + 3][j + 1] == 0)) {
+
+					cells[i][j] = 0;
+					cells[i + 2][j + 1] = 0;
+
+					cells[i + 1][j] = 1;
+					cells[i + 2][j] = 1;
+					cells[i + 3][j] = 1;
+					cells[i + 3][j + 1] = 1;
+					value = true;
+				} else {
+					value = false;
+				}
+			}
 			break;
 		case 2:
-			
+			if (direction == 0) {
+				if ((cells[i + 2][j] == 0) && (cells[i + 2][j + 1] == 0)) {
+
+					cells[i][j] = 0;
+					cells[i][j + 1] = 0;
+
+					cells[i + 1][j] = 1;
+					cells[i + 1][j + 1] = 1;
+					cells[i + 2][j] = 1;
+					cells[i + 2][j + 1] = 1;
+				} else {
+					value = false;
+				}
+			}
 			break;
 		case 3:
-			
+			if (direction == 0) {
+				if ((cells[i + 1][j] == 0) && (cells[i + 1][j + 2] == 0) && (cells[i + 2][j + 1] == 0)) {
+					cells[i][j] = 0;
+					cells[i][j + 1] = 0;
+					cells[i][j + 2] = 0;
+
+					cells[i + 1][j] = 1;
+					cells[i + 1][j + 1] = 1;
+					cells[i + 1][j + 2] = 1;
+					cells[i + 2][j + 1] = 1;
+				} else {
+					value = false;
+				}
+			}
 			break;
 		case 4:
-			
+			if (direction == 0) {
+				
+				System.out.println(cells[i + 1][j] + " - " + cells[i + 2][j + 1] + " - " + cells[i + 2][j + 2]);
+				
+				if ((cells[i + 1][j] == 0) && (cells[i + 2][j + 1] == 0) && (cells[i + 2][j + 2] == 0)) {
+					cells[i][j] = 0;
+					cells[i][j + 1] = 0;
+					cells[i + 1][j + 2] = 0;
+
+					cells[i + 1][j + 1] = 1;
+					cells[i + 2][j] = 1;
+					cells[i + 2][j + 3] = 1;
+
+					value = true;
+				} else {
+					value = false;
+				}
+			}
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + code);
 		}
+		return value;
+	}
+
+	public void printBoard() {
+		for (int i2 = 0; i2 < cells.length; i2++) {
+			for (int k = 0; k < cells[0].length; k++) {
+				if (cells[i2][k] == 1) {
+					System.err.print("[" + cells[i2][k] + "]");
+				} else {
+					System.out.print("[" + cells[i2][k] + "]");
+				}
+			}
+			System.out.println();
+
+		}
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
