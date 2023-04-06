@@ -71,7 +71,6 @@ public class BoardGame {
 		int selection = (int) (Math.random() * 5);
 		int position = generatePosition();
 		Shape shape = null;
-		addElemen(selection, position, 0);
 
 		switch (selection) {
 		case 0:
@@ -96,6 +95,7 @@ public class BoardGame {
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + selection);
 		}
+		addElemen(selection, position, 0);
 		return shape;
 	}
 
@@ -113,9 +113,7 @@ public class BoardGame {
 		int i = y / 20;
 
 		cells[i][j] = 1;
-		System.out.println("i: " + i);
-		System.out.println("j: " + j);
-		System.out.println("code: " + code);
+//		System.out.println("code: " + code);
 
 		switch (code) {
 		case 0:
@@ -130,25 +128,99 @@ public class BoardGame {
 			break;
 		case 2:
 			cells[i + 1][j] = 1;
-			cells[i][j + 1] = 1;
 			cells[i + 1][j + 1] = 1;
+			cells[i][j + 1] = 1;
 			break;
 		case 3:
 			cells[i][j + 1] = 1;
-			cells[i][j + 2] = 1;
 			cells[i + 1][j + 1] = 1;
+			cells[i][j + 2] = 1;
 			break;
 		case 4:
 			cells[i][j + 1] = 1;
 			cells[i + 1][j + 1] = 1;
 			cells[i + 1][j + 2] = 1;
+			System.out.println("i: " + i);
+			System.out.println("j: " + j);
+
+			printBoard();
+			
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + code);
 		}
 //			 printBoard();
-
+		
 	}
+	
+
+	/**
+	 * 
+	 * @param code      of the Shape {@value 0: Bar} {@value 1: EL} {@value 2:
+	 *                  Square} {@value 3: Ti} {@value 4: Zed}
+	 * @param x         current position in X
+	 * @param y         current position current in y
+	 * @param direction of the moving {@value 0: down} {@value 1: left} {@value 2:
+	 *                  right}
+	 */
+	public boolean ifMoveElement(int code, int x, int y, int direction) {
+		int j = x / 20;
+		int i = y / 20;
+		boolean value = true;
+
+		// Move shape selected
+		switch (code) {
+		// Bar
+		case 0:
+			if (direction == 0) {
+				if (cells[i + 4][j] == 0) {
+					value = true;
+				} else {
+					value = false;
+				}
+			}
+			break;
+		case 1:
+			if (direction == 0) {
+				if ((cells[i + 3][j] == 0) && (cells[i + 3][j + 1] == 0)) {
+					value = true;
+				} else {
+					value = false;
+				}
+			}
+			break;
+		case 2:
+			if (direction == 0) {
+				if ((cells[i + 2][j] == 0) && (cells[i + 2][j + 1] == 0)) {
+				} else {
+					value = false;
+				}
+			}
+			break;
+		case 3:
+			if (direction == 0) {
+				if ((cells[i + 1][j] == 0) && (cells[i + 1][j + 2] == 0) && (cells[i + 2][j + 1] == 0)) {
+				} else {
+					value = false;
+				}
+			}
+			break;
+		case 4:
+			if (direction == 0) {
+				
+				if ((cells[i + 1][j] == 0) && (cells[i + 2][j + 1] == 0) && (cells[i + 2][j + 2] == 0)) {
+
+				} else {
+					value = false;
+				}
+			}
+			break;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + code);
+		}
+		return value;
+	}
+	
 
 	/**
 	 * 
@@ -164,7 +236,6 @@ public class BoardGame {
 		int j = x / 20;
 		int i = y / 20;
 		boolean value = true;
-
 		// Move shape selected
 		switch (code) {
 		// Bar
@@ -234,16 +305,14 @@ public class BoardGame {
 		case 4:
 			if (direction == 0) {
 				
-				System.out.println(cells[i + 1][j] + " - " + cells[i + 2][j + 1] + " - " + cells[i + 2][j + 2]);
-				
 				if ((cells[i + 1][j] == 0) && (cells[i + 2][j + 1] == 0) && (cells[i + 2][j + 2] == 0)) {
 					cells[i][j] = 0;
 					cells[i][j + 1] = 0;
 					cells[i + 1][j + 2] = 0;
 
-					cells[i + 1][j + 1] = 1;
-					cells[i + 2][j] = 1;
-					cells[i + 2][j + 3] = 1;
+					cells[i + 1][j] = 1;
+					cells[i + 2][j + 1] = 1;
+					cells[i + 2][j + 2] = 1;
 
 					value = true;
 				} else {
@@ -269,6 +338,7 @@ public class BoardGame {
 			System.out.println();
 
 		}
+		System.out.println();
 	}
 
 }
