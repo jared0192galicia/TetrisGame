@@ -22,6 +22,7 @@ import shapes.Zed;
 public class Game extends JPanel {
 
 	ArrayList<Shape> shape = new ArrayList<Shape>();
+	
 	public BoardGame board;
 	
 	// Objects auxi for array lists 
@@ -58,6 +59,8 @@ public class Game extends JPanel {
 		// Init objects aux 
 		board = new BoardGame(this, 25, 35);
 		shape.add(board.generateShape());
+		
+		
 	}
 	
 	@Override
@@ -88,7 +91,7 @@ public class Game extends JPanel {
 		
 		// Redraw the shapes in Shape
 		for (Shape aux : shape) {
-			aux.draw(g, Color.GRAY, Color.CYAN);
+			aux.draw(g);
 		}
 //		System.out.println(shape.get(shape.size() - 1).get);
 	}

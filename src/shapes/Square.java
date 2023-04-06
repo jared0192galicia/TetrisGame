@@ -9,9 +9,9 @@ import java.awt.Rectangle;
 import clases.BoardGame;
 
 public class Square extends Shape {
-	
-	public Square(int x, int y, BoardGame board) {
-		super(x, y, board);
+
+	public Square(int x, int y, BoardGame board, Color border, Color fill) {
+		super(x, y, board, border, fill);
 		HEIGHT = size * 2;
 		WIDTH = size * 2;
 		code = 2;
@@ -21,35 +21,32 @@ public class Square extends Shape {
 	 * @param g Object for draw
 	 * @param x position in x
 	 * @param y position in y
-	 * */
+	 */
 	public void drawSquare(Graphics g, int x, int y) {
-		g.setColor(color);
+
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		g.setColor(colorFill);
+
 		g.fillRect(x, y, size, size);
 		g.fillRect(x, y + size, size, size);
 		g.fillRect(x + size, y, size, size);
 		g.fillRect(x + size, y + size, size, size);
-		
-		g.setColor(baseColor);
+
+		g.setColor(colorBorder);
 
 		g.drawRect(x, y, size, size);
 		g.drawRect(x, y + size, size, size);
 		g.drawRect(x + size, y, size, size);
 		g.drawRect(x + size, y + size, size, size);
-		
-	}
-	
-	@Override
-	public void draw(Graphics g, Color color, Color colorBase) {
-		this.baseColor = colorBase;
-		this.color = color;
-		
-		drawSquare(g, x, y);
 	}
 
 	@Override
 	public void moveShape(Rectangle limits) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -8,7 +8,9 @@ import shapes.Square;
 import shapes.Ti;
 import shapes.Zed;
 
+import java.awt.Color;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -20,6 +22,8 @@ public class BoardGame {
 
 	private Game game;
 	private int cells[][];
+	private ArrayList<Color> colBorder = new ArrayList<Color>();
+	private ArrayList<Color> colFill= new ArrayList<Color>();
 
 	/**
 	 * 
@@ -45,14 +49,36 @@ public class BoardGame {
 	public void playSountrack() {
 		Clip clip;
 		String ruta = "/media/Soundtrack.wav";
-
+		initColors();
 		try {
 			clip = AudioSystem.getClip();
 			clip.open(AudioSystem.getAudioInputStream(getClass().getResource(ruta)));
-			clip.loop(2);
+			clip.loop(0);
 		} catch (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
 			JOptionPane.showMessageDialog(null, "Error en audio:\n" + ex.getMessage());
 		}
+	}
+	
+	public void initColors() {
+
+		colFill.add(new Color(80, 15, 80));
+		colFill.add(new Color(25, 60, 85));
+		colFill.add(new Color(0, 90, 50));
+		colFill.add(new Color(10, 45, 130));
+		colFill.add(new Color(0, 100, 80));
+		colFill.add(new Color(130, 0, 40));
+		colFill.add(new Color(85, 40, 135));
+		colFill.add(new Color(180, 90, 5));
+		
+		colBorder.add(new Color(120, 30, 115));
+		colBorder.add(new Color(40, 80, 100));
+		colBorder.add(new Color(35, 130, 70));
+		colBorder.add(new Color(5, 130, 140));
+		colBorder.add(new Color(190, 0, 40));
+		colBorder.add(new Color(225, 130, 20));
+		colBorder.add(new Color(180, 40, 125));
+		colBorder.add(new Color(40, 110, 110));
+		colBorder.add(new Color(5, 95, 180));
 	}
 
 	/**
@@ -69,28 +95,30 @@ public class BoardGame {
 	 */
 	public Shape generateShape() {
 		int selection = (int) (Math.random() * 5);
+		int border = (int) (Math.random() * (colBorder.size() - 1));
+		int fill = (int) (Math.random() * (colFill.size() - 1));
 		int position = generatePosition();
 		Shape shape = null;
 
 		switch (selection) {
 		case 0:
-			shape = new Bar(position, 0, this);
+			shape = new Bar(position, 0, this, colBorder.get(border), colFill.get(fill));
 			break;
 
 		case 1:
-			shape = new El(position, 0, this);
+			shape = new El(position, 0, this, colBorder.get(border), colFill.get(fill));
 			break;
 
 		case 2:
-			shape = new Square(position, 0, this);
+			shape = new Square(position, 0, this, colBorder.get(border), colFill.get(fill));
 			break;
 
 		case 3:
-			shape = new Ti(position, 0, this);
+			shape = new Ti(position, 0, this, colBorder.get(border), colFill.get(fill));
 			break;
 
 		case 4:
-			shape = new Zed(position, 0, this);
+			shape = new Zed(position, 0, this, colBorder.get(border), colFill.get(fill));
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + selection);
@@ -140,19 +168,18 @@ public class BoardGame {
 			cells[i][j + 1] = 1;
 			cells[i + 1][j + 1] = 1;
 			cells[i + 1][j + 2] = 1;
-			System.out.println("i: " + i);
-			System.out.println("j: " + j);
+//			System.out.println("i: " + i);
+//			System.out.println("j: " + j);
 
-			printBoard();
-			
+//			printBoard();
+
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + code);
 		}
 //			 printBoard();
-		
+
 	}
-	
 
 	/**
 	 * 
@@ -178,12 +205,29 @@ public class BoardGame {
 				} else {
 					value = false;
 				}
+			} else if (direction == 1) {
+				if (j >= 0) {
+					if (cells[i][j - 1] == 0 && cells[i + 1][j - 1] == 0 && cells[i + 2][j - 1] == 0
+							&& cells[i + 3][j - 1] == 0) {
+						value = true;
+					}
+				} else {
+					value = false;
+				}
 			}
 			break;
 		case 1:
 			if (direction == 0) {
 				if ((cells[i + 3][j] == 0) && (cells[i + 3][j + 1] == 0)) {
 					value = true;
+				} else {
+					value = false;
+				}
+			} else if (direction == 1) {
+				if (j >= 0) {
+					if (cells[i][j - 1] == 0 && cells[i + 1][j - 1] == 0 && cells[i + 2][j - 1] == 0) {
+						value = true;
+					}
 				} else {
 					value = false;
 				}
@@ -195,6 +239,15 @@ public class BoardGame {
 				} else {
 					value = false;
 				}
+
+			} else if (direction == 1) {
+				if (j >= 0) {
+					if (cells[i][j - 1] == 0 && cells[i + 1][j - 1] == 0) {
+						value = true;
+					}
+				} else {
+					value = false;
+				}
 			}
 			break;
 		case 3:
@@ -203,13 +256,30 @@ public class BoardGame {
 				} else {
 					value = false;
 				}
+
+			} else if (direction == 1) {
+				if (j >= 0) {
+					if (cells[i][j - 1] == 0 && cells[i + 1][j] == 0) {
+						value = true;
+					}
+				} else {
+					value = false;
+				}
 			}
 			break;
 		case 4:
 			if (direction == 0) {
-				
+
 				if ((cells[i + 1][j] == 0) && (cells[i + 2][j + 1] == 0) && (cells[i + 2][j + 2] == 0)) {
 
+				} else {
+					value = false;
+				}
+			} else if (direction == 1) {
+				if (j >= 0) {
+					if (cells[i][j - 1] == 0 && cells[i + 1][j] == 0) {
+						value = true;
+					}
 				} else {
 					value = false;
 				}
@@ -220,7 +290,6 @@ public class BoardGame {
 		}
 		return value;
 	}
-	
 
 	/**
 	 * 
@@ -248,9 +317,13 @@ public class BoardGame {
 					cells[i + 3][j] = 1;
 					cells[i + 4][j] = 1;
 					value = true;
-				} else {
-					value = false;
 				}
+			} else if (direction == 1) {
+				mapingBar(i, j, 0);
+				mapingBar(i, j - 1, 1);
+			} else if (direction == 2) {
+				mapingBar(i, j, 0);
+				mapingBar(i, j + 1, 1);
 			}
 			break;
 		case 1:
@@ -265,9 +338,13 @@ public class BoardGame {
 					cells[i + 3][j] = 1;
 					cells[i + 3][j + 1] = 1;
 					value = true;
-				} else {
-					value = false;
 				}
+			} else if (direction == 1) {
+				mapingEl(i, j, 0);
+				mapingEl(i, j - 1, 1);
+			} else if (direction == 2) {
+				mapingEl(i, j, 0);
+				mapingEl(i, j + 1, 1);
 			}
 			break;
 		case 2:
@@ -281,9 +358,13 @@ public class BoardGame {
 					cells[i + 1][j + 1] = 1;
 					cells[i + 2][j] = 1;
 					cells[i + 2][j + 1] = 1;
-				} else {
-					value = false;
 				}
+			} else if (direction == 1) {
+				mapingSquare(i, j, 0);
+				mapingSquare(i, j - 1, 1);
+			} else if (direction == 2) {
+				mapingSquare(i, j, 0);
+				mapingSquare(i, j + 1, 1);
 			}
 			break;
 		case 3:
@@ -297,14 +378,18 @@ public class BoardGame {
 					cells[i + 1][j + 1] = 1;
 					cells[i + 1][j + 2] = 1;
 					cells[i + 2][j + 1] = 1;
-				} else {
-					value = false;
 				}
+			} else if (direction == 1) {
+				mapingTi(i, j, 0);
+				mapingTi(i, j - 1, 1);
+			} else if (direction == 2) {
+				mapingTi(i, j, 0);
+				mapingTi(i, j + 1, 1);
 			}
 			break;
 		case 4:
 			if (direction == 0) {
-				
+
 				if ((cells[i + 1][j] == 0) && (cells[i + 2][j + 1] == 0) && (cells[i + 2][j + 2] == 0)) {
 					cells[i][j] = 0;
 					cells[i][j + 1] = 0;
@@ -315,9 +400,13 @@ public class BoardGame {
 					cells[i + 2][j + 2] = 1;
 
 					value = true;
-				} else {
-					value = false;
 				}
+			} else if (direction == 1) {
+				mapingZed(i, j, 0);
+				mapingZed(i, j - 1, 1);
+			} else if (direction == 2) {
+				mapingZed(i, j, 0);
+				mapingZed(i, j + 1, 1);
 			}
 			break;
 		default:
@@ -339,6 +428,47 @@ public class BoardGame {
 
 		}
 		System.out.println();
+	}
+
+	/**
+	 * 
+	 * @param i
+	 * @param j
+	 * @param value
+	 */
+	public void mapingSquare(int i, int j, int value) {
+		cells[i][j] = value;
+		cells[i][j + 1] = value;
+		cells[i + 1][j] = value;
+		cells[i + 1][j + 1] = value;
+	}
+
+	public void mapingTi(int i, int j, int value) {
+		cells[i][j] = value;
+		cells[i][j + 1] = value;
+		cells[i][j + 2] = value;
+		cells[i + 1][j + 1] = value;
+	}
+
+	public void mapingZed(int i, int j, int value) {
+		cells[i][j] = value;
+		cells[i][j + 1] = value;
+		cells[i + 1][j + 1] = value;
+		cells[i + 1][j + 2] = value;
+	}
+
+	public void mapingBar(int i, int j, int value) {
+		cells[i][j] = 1;
+		cells[i + 1][j] = value;
+		cells[i + 2][j] = value;
+		cells[i + 3][j] = value;
+	}
+
+	public void mapingEl(int i, int j, int value) {
+		cells[i][j] = value;
+		cells[i + 1][j] = value;
+		cells[i + 2][j] = value;
+		cells[i + 2][j + 1] = value;
 	}
 
 }

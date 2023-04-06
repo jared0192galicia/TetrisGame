@@ -8,23 +8,23 @@ import clases.BoardGame;
 
 public class El extends Shape {
 	
-	public El(int x, int y, BoardGame board) {
-		super(x, y, board);
+	public El(int x, int y, BoardGame board, Color border, Color fill) {
+		super(x, y, board, border, fill);
 		HEIGHT = size * 3;
 		WIDTH = size * 2;
 		code = 1;
 	}
 	
 	@Override
-	public void draw(Graphics g, Color color, Color colorBase) {
-		g.setColor(color);
+	public void draw(Graphics g) {
+		g.setColor(colorFill);
 		
 		g.fillRect(x, y, size, size);
 		g.fillRect(x, y + size, size, size);
 		g.fillRect(x, y + (size * 2), size, size);
 		g.fillRect(x + size, y + (size * 2), size, size);
 		
-		g.setColor(colorBase);
+		g.setColor(colorBorder);
 
 		g.drawRect(x, y, size, size);
 		g.drawRect(x, y + size, size, size);
