@@ -1,8 +1,8 @@
-# Tetriz
+# Tetris
 
 > Contienido de los paquetes
 
-* _tetriz_
+* _tetris_
 
 	Contiene la clase principal del proyecto
 
@@ -17,7 +17,7 @@
 
 	Contiene los eventos generados en las interfaces y metodos internos
 
-* _images_
+* _media_
 
-	Contiene las imagenes utilizadas en el código
+	Contiene los recursos visuales utilizadas en el juego
 
