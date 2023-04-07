@@ -53,7 +53,7 @@ public class BoardGame {
 		try {
 			clip = AudioSystem.getClip();
 			clip.open(AudioSystem.getAudioInputStream(getClass().getResource(ruta)));
-			clip.loop(0);
+			clip.loop(1);
 		} catch (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
 			JOptionPane.showMessageDialog(null, "Error en audio:\n" + ex.getMessage());
 		}
