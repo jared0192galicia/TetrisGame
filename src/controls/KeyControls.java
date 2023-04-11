@@ -12,7 +12,7 @@ public class KeyControls extends KeyAdapter {
 	public static boolean d;
 	public static boolean s;
 	public static boolean left;
-	public static boolean right ;
+	public static boolean right;
 	
 	private boolean keyValid;
 	private int code;

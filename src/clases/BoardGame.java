@@ -140,44 +140,27 @@ public class BoardGame {
 		int j = x / 20;
 		int i = y / 20;
 
-		cells[i][j] = 1;
 //		System.out.println("code: " + code);
 
 		switch (code) {
 		case 0:
-			cells[i + 1][j] = 1;
-			cells[i + 2][j] = 1;
-			cells[i + 3][j] = 1;
+			mapingBar(i, j, 1);
 			break;
 		case 1:
-			cells[i + 1][j] = 1;
-			cells[i + 2][j] = 1;
-			cells[i + 2][j + 1] = 1;
+			mapingEl(i, j, 1);
 			break;
 		case 2:
-			cells[i + 1][j] = 1;
-			cells[i + 1][j + 1] = 1;
-			cells[i][j + 1] = 1;
+			mapingSquare(i, j, 1);
 			break;
 		case 3:
-			cells[i][j + 1] = 1;
-			cells[i + 1][j + 1] = 1;
-			cells[i][j + 2] = 1;
+			mapingTi(i, j, 1);
 			break;
 		case 4:
-			cells[i][j + 1] = 1;
-			cells[i + 1][j + 1] = 1;
-			cells[i + 1][j + 2] = 1;
-//			System.out.println("i: " + i);
-//			System.out.println("j: " + j);
-
-//			printBoard();
-
+			mapingZed(i, j, 1);
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + code);
 		}
-//			 printBoard();
 
 	}
 
@@ -200,15 +183,12 @@ public class BoardGame {
 		// Bar
 		case 0:
 			if (direction == 0) {
-				if (cells[i + 4][j] == 0) {
-					value = true;
-				} else {
+				if (cells[i + 4][j] == 1) {
 					value = false;
 				}
 			} else if (direction == 1) {
 				if (j >= 0) {
-					if (cells[i][j - 1] == 0 && cells[i + 1][j - 1] == 0 && cells[i + 2][j - 1] == 0
-							&& cells[i + 3][j - 1] == 0) {
+					if (cells[i][j - 1] == 0 && cells[i + 1][j - 1] == 0 && cells[i + 2][j - 1] == 0 && cells[i + 3][j - 1] == 0) {
 						value = true;
 					}
 				} else {
@@ -300,11 +280,10 @@ public class BoardGame {
 	 * @param direction of the moving {@value 0: down} {@value 1: left} {@value 2:
 	 *                  right}
 	 */
-	public boolean moveElement(int code, int x, int y, int direction) {
+	public void moveElement(int code, int x, int y, int direction) {
 
 		int j = x / 20;
 		int i = y / 20;
-		boolean value = true;
 		// Move shape selected
 		switch (code) {
 		// Bar
@@ -312,11 +291,7 @@ public class BoardGame {
 			if (direction == 0) {
 				if (cells[i + 4][j] == 0) {
 					cells[i][j] = 0;
-					cells[i + 1][j] = 1;
-					cells[i + 2][j] = 1;
-					cells[i + 3][j] = 1;
-					cells[i + 4][j] = 1;
-					value = true;
+					mapingBar(i + 1, j, 1);
 				}
 			} else if (direction == 1) {
 				mapingBar(i, j, 0);
@@ -329,15 +304,10 @@ public class BoardGame {
 		case 1:
 			if (direction == 0) {
 				if ((cells[i + 3][j] == 0) && (cells[i + 3][j + 1] == 0)) {
-
 					cells[i][j] = 0;
 					cells[i + 2][j + 1] = 0;
 
-					cells[i + 1][j] = 1;
-					cells[i + 2][j] = 1;
-					cells[i + 3][j] = 1;
-					cells[i + 3][j + 1] = 1;
-					value = true;
+					mapingEl(i + 1, j, 1);
 				}
 			} else if (direction == 1) {
 				mapingEl(i, j, 0);
@@ -353,11 +323,7 @@ public class BoardGame {
 
 					cells[i][j] = 0;
 					cells[i][j + 1] = 0;
-
-					cells[i + 1][j] = 1;
-					cells[i + 1][j + 1] = 1;
-					cells[i + 2][j] = 1;
-					cells[i + 2][j + 1] = 1;
+					mapingSquare(i + 1, j, 1);
 				}
 			} else if (direction == 1) {
 				mapingSquare(i, j, 0);
@@ -374,10 +340,7 @@ public class BoardGame {
 					cells[i][j + 1] = 0;
 					cells[i][j + 2] = 0;
 
-					cells[i + 1][j] = 1;
-					cells[i + 1][j + 1] = 1;
-					cells[i + 1][j + 2] = 1;
-					cells[i + 2][j + 1] = 1;
+					mapingTi(i + 1, j, 1);
 				}
 			} else if (direction == 1) {
 				mapingTi(i, j, 0);
@@ -395,11 +358,8 @@ public class BoardGame {
 					cells[i][j + 1] = 0;
 					cells[i + 1][j + 2] = 0;
 
-					cells[i + 1][j] = 1;
-					cells[i + 2][j + 1] = 1;
-					cells[i + 2][j + 2] = 1;
+					mapingSquare(i + 1, j, 1);
 
-					value = true;
 				}
 			} else if (direction == 1) {
 				mapingZed(i, j, 0);
@@ -412,7 +372,6 @@ public class BoardGame {
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + code);
 		}
-		return value;
 	}
 
 	public void printBoard() {
