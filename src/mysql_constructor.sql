@@ -1,15 +1,22 @@
+DROP DATABASE IF EXISTS tetris;
 CREATE DATABASE tetris;
 
 use tetris;
 
 CREATE TABLE user(
 	id INTEGER PRIMARY KEY,
-    ´name´ VARCHAR(25) NOT NULL,
+    alias VARCHAR(25) NOT NULL,
     username VARCHAR(8) NOT NULL UNIQUE,
 	email varchar(30) NOT NULL,
-    ´password´ varchar(50) NOT NULL,
+    pass varchar(100) NOT NULL,
     experience INTEGER
-);
+)ENGINE='InnoDB' default charset = latin1;
+
+INSERT INTO user VALUES (0, "Jared", "root", "jared0192galici@gmail.com", 
+	aes_encrypt("1234", "root"), -9999);
+    SELECT user.alias , convert(aes_decrypt(pass, "root") 
+    using UTF8) as passs from user;
+    SELECT user.pass from user;
 
 CREATE TABLE game(
     idPlayer INTEGER NOT NULL,
@@ -31,9 +38,6 @@ CREATE TABLE styleShape (
 	colorFill VARCHAR(3) NOT NULL,
 	colorBorder VARCHAR(3) NOT NULL
 );
-
-
-
 
 
 

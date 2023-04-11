@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,8 +17,13 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+
+import clases.LoadData;
 import clases.MainWindow;
 import clases.MenuWindow;
+import driver.Conexion;
 
 public class Login extends JPanel implements ActionListener {
 	
@@ -99,13 +106,45 @@ public class Login extends JPanel implements ActionListener {
 		if (e.getSource() == access) {
 			
 			// valid textField the user
-			String name = txtUser.getText().trim();
+			String user = txtUser.getText().trim();
+			String pass = String.valueOf(txtPass.getPassword())
+					;
 			// Continue 
-			if (!name.equals("")) {
-				MainWindow.name = name;
-				txtUser.setBackground(Color.BLUE);
-				window.setVisible(false);
-				new MenuWindow();
+			if (!user.equals("") && !pass.equals("")) {
+				
+				Connection cn = Conexion.getConnection();
+				try {
+					PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
+					        "SELECT alias, experience, CONVERT(AES_DECRYPT(pass, \"root\") \r\n"
+					        + "    USING UTF8) FROM user WHERE username = '" + user + "'");
+					
+					ResultSet rs = pst.executeQuery();
+					
+					if (rs.next()) {
+						String name = rs.getString("alias");
+						String xp = rs.getString("experience");
+						String password = rs.getString(3);
+						
+						if (pass.equals(password)) {
+							MainWindow.name = name;
+							txtUser.setBackground(Color.BLUE);
+							LoadData.setIdUser(0);
+							LoadData.load();
+							window.setVisible(false);
+							new MenuWindow();							
+						}  else {
+							JOptionPane.showMessageDialog(null, "Datos invalidos");
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Datos invalidos");
+					}
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
 			} else {
 				txtUser.setBackground(Color.RED);
 				JOptionPane.showMessageDialog(null, "Debe ingresar su nombre");
